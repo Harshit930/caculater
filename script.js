@@ -33,6 +33,10 @@ function appendDotValue() {
 function appendOperation(opr) {
     if (firstValue === '') return;
 
+    if (lastValue !== '') {
+        calculate(); // chaining support
+    }
+
     operation = opr;
     document.getElementById('display').value = firstValue + operation;
 }
@@ -48,10 +52,19 @@ function calculate() {
         case '+': result = num1 + num2; break;
         case '-': result = num1 - num2; break;
         case '*': result = num1 * num2; break;
-        case '/': result = num1 / num2; break;
+        case '/': result = num2 === 0 ? 'Error' : num1 / num2; break;
     }
 
     document.getElementById('display').value = result;
 
-    firstValue = result.toSt
+    firstValue = result.toString();
+    lastValue = '';
+    operation = '';
+}
+
+function clearAll() {
+    firstValue = '';
+    lastValue = '';
+    operation = '';
+    document.getElementById('display').value = '';
 }
